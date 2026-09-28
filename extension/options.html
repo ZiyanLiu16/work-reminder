@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>回到目标 · Work Reminder</title><link rel="stylesheet" href="styles.css"></head>
+<body>
+  <header><a class="brand" href="options.html"><span class="brand-icon">↗</span> 回到目标 <span class="brand-en">WORK REMINDER</span></a><span class="local-tag">● 仅保存在本机</span></header>
+  <main>
+    <section class="panel onboarding" aria-label="首次使用引导"><div class="eyebrow">从这里开始</div><h2>把提醒，换成与你有关的内容。</h2><p>按下面三步设置。目标是必填项；项目和鼓励链接可以现在添加，也可以以后补充。所有内容都能在这个页面随时修改。</p>
+      <nav class="setup-steps" aria-label="设置步骤"><a href="#goal-section"><strong>1 · 写下你的目标</strong><span id="goal-progress">用一句话写下你真正想实现的事</span></a><a href="#project-section"><strong>2 · 选择正在做的项目</strong><span id="project-progress">选择本地文件夹，预览后保存片段</span></a><a href="#inspiration-section"><strong>3 · 收藏鼓励你的帖子</strong><span id="inspiration-progress">粘贴链接，可附上一句喜欢的话</span></a></nav>
+      <p class="hint">保存目标后即可开始使用。关闭设置页，正常浏览即可；累计达到设定时间时，会在目标网站中提醒你。</p>
+    </section>
+    <section class="intro"><div class="eyebrow">给注意力，一个回来的理由</div><h1>记得你真正<br>想做的事。</h1><p>休息可以尽兴，回来也可以轻一点。<br>让一个目标、一段项目，或一句鼓励，帮你重新开始。</p></section>
+    <aside class="status-card"><div class="eyebrow">这一轮的浏览时间</div><div id="elapsed" class="clock">00:00</div><p id="timer-reason">正在连接扩展…</p><div class="progress"><span id="progress"></span></div><small id="next-reminder">默认累计 15 分钟后提醒</small><button id="toggle" class="text-button">暂停提醒</button></aside>
+    <section id="focus" class="panel focus-panel" hidden><div class="eyebrow">现在，做一小步</div><h2 id="focus-goal"></h2><p>打开你的项目，挑一件五分钟内可以开始的事。读一小段文档，也算开始。</p><div id="focus-snippet"></div></section>
+    <section id="goal-section" class="panel settings-panel"><div class="section-heading"><span class="step">01</span><div><h2>你想回到什么？</h2><p>想到它时，你会愿意再努力一点的那件事。用一句话写下来，提醒时会用到它。</p></div></div>
+      <form id="settings-form"><label for="goal">我的目标</label><textarea id="goal" maxlength="300" rows="3" required placeholder="比如：完成我的第一个图学习实验，让想法变成真实的结果。"></textarea>
+      <div class="form-row"><div><label for="threshold">累计多久后提醒</label><div class="inline"><input id="threshold" type="number" min="0.5" max="120" step="0.5" value="15" required><span>分钟</span></div></div><p class="hint">你选择的网站合并计时。<br>离开连续满 5 分钟，下一轮重新开始。</p></div>
+      <div class="button-row"><button class="primary" type="submit">保存目标与间隔</button><button id="preview" type="button">预览下一种提醒</button></div><p id="save-status" role="status" class="feedback"></p></form>
+    </section>
+    <section id="websites-section" class="panel"><h2>哪些网站需要提醒？</h2><p>这些网站的浏览时间会合并累计。点击“编辑”可添加或移除网站。</p>
+      <div id="websites-saved"><p id="websites-summary" class="hint"></p><ul id="websites-list" class="website-list"></ul><button id="edit-websites" type="button" disabled>编辑网站列表</button></div>
+      <form id="websites-form" hidden><label for="websites">监控的网站</label><textarea id="websites" rows="6" placeholder="youtube.com&#10;bilibili.com&#10;reddit.com" spellcheck="false"></textarea><p class="hint">按整个域名及其子域名匹配，支持 HTTP / HTTPS，不区分具体帖子或路径。删除一行即可移除网站；清空并保存可停止所有网站的监控。Chrome 内部页面和扩展商店等受保护页面不支持。</p><div class="button-row"><button type="submit" class="primary">保存网站列表</button><button id="cancel-websites" type="button">取消</button></div></form><p id="websites-status" class="feedback" role="status"></p>
+    </section>
+    <section id="project-section" class="panel"><div class="section-heading"><span class="step">02</span><div><h2>你正在做哪些项目？ <span class="optional">可选</span></h2><p>选择电脑上的 1–2 个项目文件夹。提醒时展示一小段文档或代码，帮你想起可以从哪里继续。</p></div></div>
+      <div id="projects"></div><button id="choose-project">＋ 选择项目文件夹</button><input id="project-files" type="file" webkitdirectory multiple hidden>
+      <p class="hint">选择后先预览，再保存。只读取候选文本文件，不运行项目代码。<br>片段是导入时的快照；更新时点击“重新导入”。</p>
+      <div id="import-progress" hidden><p id="import-message" role="status"></p><button id="cancel-import">取消导入</button></div>
+      <div id="import-preview" hidden><h3>选择要留下的片段</h3><p class="hint">默认排除隐藏文件、依赖、构建产物和常见密钥文件。请再检查一下内容，取消不想展示的片段。</p><div class="snippet-selection"><label><input id="select-all-snippets" type="checkbox"> 全选</label><span id="snippet-selection-count" class="hint" role="status"></span></div><div id="candidate-list"></div><div class="button-row"><button id="save-project" class="primary">保存选中的片段</button><button id="discard-project">取消</button></div></div>
+      <p id="project-status" class="feedback" role="status"></p>
+    </section>
+    <section id="inspiration-section" class="panel encouragement-panel"><div class="section-heading"><span class="step">03</span><div><h2>什么内容能鼓励你？ <span class="optional">可选</span></h2><p>粘贴一条让你平静下来、愿意行动的小红书或其他帖文链接。可以添加多条。</p></div></div>
+      <div id="inspirations"></div>
+      <form id="inspiration-form"><label for="inspiration-url">帖文链接（支持 HTTP / HTTPS）</label><input id="inspiration-url" type="url" required maxlength="4000" placeholder="例如：http://xhslink.com/o/…">
+      <label for="inspiration-text">最打动你的那句话 <span class="optional">可选</span></label><textarea id="inspiration-text" maxlength="1000" rows="3" placeholder="填写后，提醒卡片会直接展示这段话。"></textarea>
+      <label for="inspiration-author">作者或备注 <span class="optional">可选</span></label><input id="inspiration-author" type="text" maxlength="100" placeholder="例如：某位博主的一句话">
+      <button type="submit" class="primary">添加这条鼓励</button><p id="inspiration-status" role="status" class="feedback"></p></form>
+      <p class="hint">可以连续添加，最多保存 20 条；每次出现鼓励提醒时，按顺序换一条，全部展示后再循环。支持小红书 HTTP 分享短链接。只填链接也可以；不会自动抓取帖文正文。填写摘录后，无需打开原帖就能读到鼓励。还没有收藏时，使用内置原创鼓励。</p>
+    </section>
+    <details class="panel"><summary>本地检查与数据管理</summary><p class="hint">首次体验可以把间隔设为 0.5 分钟，保存后切到目标网站等待提醒。体验完成后改回 15 分钟。</p><button id="diagnose">检查扩展运行状态</button><pre id="diagnostics" aria-live="polite"></pre><p class="hint">第一版只检测 Chrome 内的目标网站，不检测桌面微信；后台视频与画中画不计时。原生视频全屏时，提醒可能在退出全屏后出现。</p><button id="clear-data" class="danger">清除所有本地数据</button></details>
+    <footer>留一点时间给你在意的事。<span>本地版本 0.2.2 · 无账号 · 无云端上传</span></footer>
+  </main>
+  <script src="card.js"></script><script type="module" src="options.js"></script>
+</body></html>

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>回到目标 · 设置截图</title>
+  <style>
+    html, body, iframe { margin: 0; width: 100%; height: 100%; border: 0; overflow: hidden; }
+  </style>
+</head>
+<body>
+  <iframe id="settings" src="../../extension/options.html" title="回到目标设置界面"></iframe>
+  <script>
+    const frame = document.querySelector('#settings');
+    frame.addEventListener('load', () => {
+      const doc = frame.contentDocument;
+      const target = doc.querySelector('#goal-section');
+      doc.querySelector('#goal').value = '完成今天最重要的一项工作，让注意力回到真正想推进的事情。';
+      doc.querySelector('#save-status').textContent = '';
+      const list = doc.querySelector('#websites-list');
+      list.innerHTML = '<li>youtube.com</li><li>bilibili.com</li><li>xiaohongshu.com</li>';
+      doc.querySelector('#websites-summary').textContent = '3 个网站正在计时';
+      doc.querySelector('#edit-websites').disabled = false;
+      const clearRuntimeError = new MutationObserver(() => {
+        const status = doc.querySelector('#save-status');
+        if (status.textContent.includes('sendMessage')) status.textContent = '';
+      });
+      clearRuntimeError.observe(doc.querySelector('#save-status'), { childList: true, characterData: true, subtree: true });
+      frame.contentWindow.scrollTo({ top: target.offsetTop - 26, behavior: 'instant' });
+    });
+  </script>
+</body>
+</html>

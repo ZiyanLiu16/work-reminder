@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>回到目标 · 工具栏弹窗截图</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 100%; height: 100%; }
+    body {
+      overflow: hidden;
+      color: #253b33;
+      background: linear-gradient(145deg, #f7f7f1 0%, #edf2e8 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .page {
+      width: min(1060px, calc(100% - 96px));
+      min-height: 650px;
+      margin: 54px auto;
+      padding: 72px;
+      background: rgba(255,255,255,.72);
+      border: 1px solid #dbe4d9;
+      border-radius: 22px;
+    }
+    .eyebrow { color: #688174; font-size: 12px; font-weight: 650; letter-spacing: 1.8px; }
+    h1 { max-width: 680px; margin: 18px 0; font-size: 46px; line-height: 1.2; letter-spacing: -1.2px; }
+    .lead { max-width: 570px; color: #66786d; font-size: 17px; line-height: 1.8; }
+    .toolbar {
+      position: absolute;
+      top: 36px;
+      right: 60px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 14px;
+      color: #63786c;
+      background: #fff;
+      border: 1px solid #d9e3d7;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px #193b2e1a;
+      font-size: 12px;
+    }
+    .extension-icon { display: grid; place-items: center; width: 30px; height: 30px; color: #fff; background: #347663; border-radius: 9px; font-size: 21px; }
+    .popup-shell {
+      position: absolute;
+      top: 98px;
+      right: 60px;
+      width: 386px;
+      height: 480px;
+      overflow: hidden;
+      background: #f7f8f1;
+      border: 1px solid #d9e3d7;
+      border-radius: 16px;
+      box-shadow: 0 24px 70px #193b2e35;
+    }
+    iframe { width: 100%; height: 100%; border: 0; }
+  </style>
+</head>
+<body>
+  <main class="page" aria-hidden="true">
+    <div class="eyebrow">工具栏控制</div>
+    <h1>不用离开当前页面，也能查看计时状态。</h1>
+    <p class="lead">点击扩展图标即可暂停提醒、进入学习模式，或回到完整设置页。</p>
+  </main>
+  <div class="toolbar"><span class="extension-icon">↗</span><span>回到目标</span></div>
+  <div class="popup-shell"><iframe id="popup" src="../../extension/popup.html" title="回到目标工具栏弹窗"></iframe></div>
+  <script>
+    const frame = document.querySelector('#popup');
+    frame.addEventListener('load', () => {
+      const doc = frame.contentDocument;
+      doc.querySelector('#elapsed').textContent = '10:12';
+      doc.querySelector('#reason').textContent = '距离下一次提醒还有 4 分 48 秒';
+      doc.querySelector('#goal').textContent = '完成今天最重要的一项工作，让注意力回到真正想推进的事情。';
+      doc.querySelector('#toggle').textContent = '暂停提醒';
+      doc.querySelector('#learning').disabled = false;
+      doc.querySelector('#hint').textContent = '离开目标网站满 5 分钟，累计清零。';
+    });
+  </script>
+</body>
+</html>

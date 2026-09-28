@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>回到目标 · 通知截图</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 100%; height: 100%; }
+    body {
+      overflow: hidden;
+      color: #253b33;
+      background:
+        radial-gradient(circle at 10% 10%, #eef3e9 0, transparent 34%),
+        linear-gradient(145deg, #f8f8f3 0%, #eef3e9 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .page {
+      width: min(1060px, calc(100% - 96px));
+      margin: 56px auto;
+    }
+    .browser-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      height: 54px;
+      padding: 0 18px;
+      color: #728278;
+      background: rgba(255,255,255,.78);
+      border: 1px solid #dbe4d9;
+      border-radius: 18px 18px 0 0;
+    }
+    .dots { display: flex; gap: 7px; }
+    .dots span { width: 9px; height: 9px; border-radius: 50%; background: #c9d4c7; }
+    .address {
+      flex: 1;
+      height: 32px;
+      padding: 7px 14px;
+      background: #f2f5ef;
+      border-radius: 16px;
+      font-size: 12px;
+    }
+    .content {
+      min-height: 620px;
+      padding: 58px 64px;
+      background: rgba(255,255,255,.72);
+      border: 1px solid #dbe4d9;
+      border-top: 0;
+      border-radius: 0 0 18px 18px;
+    }
+    .eyebrow { color: #688174; font-size: 12px; font-weight: 650; letter-spacing: 1.8px; }
+    h1 { max-width: 650px; margin: 18px 0; font-size: 44px; line-height: 1.22; letter-spacing: -1.2px; }
+    .lead { max-width: 600px; color: #66786d; font-size: 17px; line-height: 1.8; }
+    .placeholder { display: grid; grid-template-columns: 1.25fr .75fr; gap: 22px; margin-top: 42px; }
+    .block { height: 190px; border-radius: 18px; background: #e8eee4; }
+    .block.small { background: #f0f3ed; }
+    work-reminder-card { --reminder-right: 54px; --reminder-bottom: 42px; }
+  </style>
+</head>
+<body>
+  <main class="page" aria-hidden="true">
+    <div class="browser-bar"><div class="dots"><span></span><span></span><span></span></div><div class="address">正在浏览的网站</div></div>
+    <section class="content">
+      <div class="eyebrow">浏览页面</div>
+      <h1>提醒出现时，不会打断你正在看的内容。</h1>
+      <p class="lead">达到设定时间后，通知卡会显示在当前页面右下角。你可以立即回到目标，也可以稍后再提醒。</p>
+      <div class="placeholder"><div class="block"></div><div class="block small"></div></div>
+    </section>
+  </main>
+  <script src="../../extension/card.js"></script>
+  <script>
+    const encouragement = new URLSearchParams(location.search).get('variant') === 'encouragement';
+    const card = WorkReminderCard.create(encouragement ? {
+      title: '给今天的自己一点耐心',
+      text: '不需要一下子完成全部。先回去做五分钟，让下一步变得清楚一点。',
+      author: '你收藏的鼓励内容'
+    } : {
+      title: '回到今天最重要的事',
+      text: '你已经浏览了一会儿。现在回来推进一个小步骤，就足够让事情继续向前。'
+    });
+    if (encouragement) card.style.setProperty('--reminder-bottom', '88px');
+    document.body.append(card);
+  </script>
+</body>
+</html>

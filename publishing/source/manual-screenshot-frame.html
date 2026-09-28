@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Chrome Web Store screenshot frame</title>
+  <style>
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #f4f5ee; }
+    img { position: fixed; inset: 0; display: block; width: 100vw; height: 100vh; object-fit: contain; }
+  </style>
+</head>
+<body>
+  <img id="shot" alt="">
+  <script>
+    const name = new URLSearchParams(location.search).get('name');
+    const allowed = new Set([
+      'interface_1', 'interface_2', 'interface_3',
+      'notification_2', 'notification_3'
+    ]);
+    if (!allowed.has(name)) throw new Error('Unknown screenshot');
+    document.querySelector('#shot').src = `../assets/Screenshot 2026-09-27_${name}.png`;
+  </script>
+</body>
+</html>
